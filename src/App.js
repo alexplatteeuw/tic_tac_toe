@@ -3,7 +3,16 @@ import { useState } from "react"
 export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null))
 
+  // JavaScript supports closures which means an inner function (e.g. handleClick) has access
+  // to variables and functions defined in an outer function (e.g. Board). The handleClick function 
+  // can read the squares state and call the setSquares method because they are both defined inside of
+  // the Board function.
   function handleClick(i) {
+    // We make a copy of the current state (squares) instead of changing it directly.
+    // This is important because React state is immutable: mutating it directly
+    // (e.g. squares[i] = "X") would keep the same array reference, and React might
+    // not re-render. By creating a new array and updating it, React can detect the
+    // change and update the UI correctly.
     const nextSquares = squares.slice()
     nextSquares[i] = "X"
     setSquares(nextSquares)
